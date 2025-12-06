@@ -19,7 +19,7 @@ function get_grand_total(file::IOStream)::Int64
         chars |> join
     end
 
-    numeric_cols = [replace.(split(row, '|'), ' ' => 'x') for row in separated_numeric_rows]
+    numeric_cols = [split(row, '|') for row in separated_numeric_rows]
     operators = (operator_row |> split)
 
     operations = Vector{Tuple{String,Vector{String}}}(undef, operators |> length)
@@ -39,7 +39,7 @@ function get_grand_total(file::IOStream)::Int64
 
         for number in numbers
             for (i, char) in (number |> enumerate)
-                rlc_numbers[i] *= char == 'x' ? "" : char
+                rlc_numbers[i] *= (char |> isempty) ? 0 : char
             end
         end
         total += reduce(op, parse.(Int, rlc_numbers))
