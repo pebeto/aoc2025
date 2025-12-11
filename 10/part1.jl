@@ -1,6 +1,3 @@
-using JuMP
-using HiGHS
-
 file = open("./input", "r")
 
 Machine = NamedTuple{(:target, :operations),Tuple{Vector{Int},Vector{Vector{Int}}}}
